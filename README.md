@@ -6,3 +6,5 @@ MapInsights is an efficient toolkit that perform quality control (QC) analysis o
 <b><i>genedepth</i></b> module calculate exon or region wise depth of coverage. The module takes genomic coordinates in bed format, a sorted BAM file and reference file as input and generate logs and depth plots which are presented as a report in HTML.
 
 <b><i>siteinfo</i></b> module query genomic locus in BAM files and provide comprehensive information about the alignment in query sites such as which nucleotides present in that site, their base quality, strands, read mapping quality, insert-size, read-group etc.
+
+<b><i>jumpreads</i></b> module is designed to extract reads with atypical alignment properties such as extra long inserts, mate map to different contigs and exception in read orientation etc. jumpreads acts on a coordinate sorted BAM file which is the prime input of the module.
