@@ -26,3 +26,30 @@ download the comprass file and
 unzip mapinsights-master
 cd mapinsights-master; make
 ```
+# Usage
+### **mapinsights**
+```
+Program: mapinsights
+Version: 1.0
+
+Usage:   mapinsights <command> [options]
+
+Command: bamqc        QC of alignment file
+         genedepth    Estimate exon-wise bed coverage
+         siteinfo     Details information about genomic site(s)
+         jumpreads    Extract reads with jump alignment
+```
+
+### **mapinsights-bamqc**
+```
+Usage:  mapinsights bamqc -r <ref.fa> -o <output-folder-path> -i <aligned.bam>
+
+Options:
+     -r   ref.fa                        reference fasta
+     -b   bed file                      regions (BED) [null]
+     -i   input file                    Alignment file (BAM)
+     -o   output folder                 [./]
+     -x   exclude read groups
+          listed in FILE, one per line  [null]
+     -h   help
+```
