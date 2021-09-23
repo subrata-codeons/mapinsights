@@ -16,6 +16,13 @@ MapInsights is an efficient toolkit that perform quality control (QC) analysis o
 
 ### **Getting started:**
 ```
-git clone https://github.com/SUBRATA-NSM/mapinsights.git
+git clone https://github.com/SUBRATA-NSM/mapinsights
 cd mapinsights; make
+```
+OR
+
+download the comprass file and
+```
+unzip mapinsights-master
+cd mapinsights-master; make
 ```
