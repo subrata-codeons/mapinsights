@@ -45,22 +45,22 @@ Command: bamqc        QC of alignment file
 Usage:  mapinsights bamqc -r <ref.fa> -o <output-folder-path> -i <aligned.bam>
 
 Options:
-     -r   ref.fa                        reference fasta
-     -b   bed file                      regions (BED) [null]
-     -i   input file                    Alignment file (BAM)
-     -o   output folder                 [./]
-     -x   exclude read groups
-          listed in FILE, one per line  [null]
-     -h   help
+	-r   ref.fa                        reference fasta
+	-b   bed file                      regions (BED) [null]
+	-i   input file                    Alignment file (BAM)
+	-o   output folder                 [./]
+	-x   exclude read groups
+             listed in FILE, one per line  [null]
+	-h   help
 ```
 ### **mapinsights-genedepth**
 ```
-Usage: mapinsights genedepth -r <ref.fa> -o <output-folder> -i <aligned.bam> -b <gene.bed>
+Usage:  mapinsights genedepth -r <ref.fa> -o <output-folder> -i <aligned.bam> -b <gene.bed>
 
 Options:
-	-r  ref.fa      reference fasta
+	-r  ref.fa              reference fasta
 	-b  gene bed file	regions (BED)
-	-i  input file   Alignment file (BAM)
-	-o  path to output folder	[./] 
+	-i  input file          Alignment file (BAM)
+	-o  output folder	[./] 
 	-h  help
 ```
