@@ -53,3 +53,14 @@ Options:
           listed in FILE, one per line  [null]
      -h   help
 ```
+### **mapinsights-genedepth**
+```
+Usage: mapinsights genedepth -r <ref.fa> -o <output-folder> -i <aligned.bam> -b <gene.bed>
+
+Options:
+	-r  ref.fa      reference fasta
+	-b  gene bed file	regions (BED)
+	-i  input file   Alignment file (BAM)
+	-o  path to output folder	[./] 
+	-h  help
+```
