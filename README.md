@@ -69,10 +69,10 @@ Options:
 Usage: mapinsights siteinfo -r <ref.fa> -i <aligned.bam> 
 
 Options:
-	-r  ref.fa                reference fasta
-	-i  input file            Alignment file (BAM)
+	-r  ref.fa                	reference fasta
+	-i  input file            	Alignment file (BAM)
 	-o  output file 
-	-s  query coordinate (single)        [chr#:position-position]
+	-s  query coordinate (single)   [chr#:position-position]
 	-p  query coordinate (batch)
 	    listed in FILE, one per line     [example :chr#	pos]
 	-h  help
