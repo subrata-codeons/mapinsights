@@ -78,7 +78,7 @@ Options:
 	-h  help
 
 ```
-### **mapinsights-siteinfo**
+### **mapinsights-jumpreads**
 ```
 Usage: mapinsights jumpreads -i <aligned.bam> -o <output.bam> 
 
