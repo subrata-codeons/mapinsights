@@ -78,3 +78,11 @@ Options:
 	-h  help
 
 ```
+### **mapinsights-siteinfo**
+```
+Usage: mapinsights jumpreads -i <aligned.bam> -o <output.bam> 
+
+Options:
+	
+
+```
