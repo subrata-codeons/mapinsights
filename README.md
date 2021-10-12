@@ -80,9 +80,13 @@ Options:
 ```
 ### **mapinsights-jumpreads**
 ```
-Usage: mapinsights jumpreads -i <aligned.bam> -o <output.bam> 
+Usage: mapinsights jumpreads -o <output-file> -i <aligned.bam>
 
 Options:
+	-s  minimum insertsize		[1k]
+	-i  input file			Alignment file (BAM)
+	-o  output 			Alignment file (BAM)
+	-c  maximum overlap between outward pair(range : [0 to readlength-1])	[90 bases]
 	
 
 ```
