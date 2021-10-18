@@ -7,7 +7,7 @@ MapInsights is an efficient toolkit that perform quality control (QC) analysis o
 
 <b><i>siteinfo</i></b> module query genomic locus in BAM files and provide comprehensive information about the alignment in query sites such as which nucleotides present in that site, their base quality, strands, read mapping quality, insert-size, read-group etc. Referecne fasta, BAM files and genomic coordinate(s) are the main inputs of this module. Genomic coordinate can be passed as argument or a text file contains a list of coordinates can be used for batch query.
 
-<b><i>jumpreads</i></b> module extract reads with atypical alignment properties such as extra long inserts, mate map to different contigs and exception in read orientation etc. jumpreads acts on a coordinate sorted BAM file which is the prime input of the module and generate a bam file as output.
+<b><i>jumpreads</i></b> module extract reads with atypical alignment properties such as extra long inserts, mate map to different contigs and exception in read orientation etc. jumpreads acts on a coordinate sorted BAM file which is the primary input of the module and generate a bam file as output.
 
 # Installation
 ### **Requirements:**
