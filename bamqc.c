@@ -2064,23 +2064,23 @@ void PrintLogFiles(log_v *OA, int type, int rLen, char *outdir)
       
    fprintf(gfp1,"indel <- read.table(\"%s_INDEL_MM.txt\",header = TRUE, sep = \"\t\")\n", outfn);
    fprintf(gfp1,"indel_order <- c(\">=-5\",\"-4\",\"-3\",\"-2\",\"-1\",\"0\",\"+1\",\"+2\",\"+3\",\"+4\",\">=+5\")\n");
-   fprintf(gfp1,"flnkshmap_indel <- read.table(\"%s_INDEL_MM_flanks.txt\",header = TRUE, sep = \"\t\")\n", outfn);
+   //fprintf(gfp1,"flnkshmap_indel <- read.table(\"%s_INDEL_MM_flanks.txt\",header = TRUE, sep = \"\t\")\n", outfn);
    
    
-   
-   fprintf(gfp1,"g1 <- ggplot(data = indel, aes(x = factor(Len), y = pct_of_reads, fill=factor(Type, levels=c(\"C\",\"G\",\"T\",\"A\",\"Multi-nucleotide\")))) +  geom_bar(stat=\"identity\") + scale_fill_manual(values = c(\"lightsalmon4\",\"lightseagreen\",\"brown2\",\"gray30\",\"darkorange\")) + theme(legend.title = element_blank()) + scale_x_discrete(limits = indel_order) + ylab(\"%% of reads\") + theme(axis.title.x=element_blank(),axis.text.x=element_blank()) + labs(title=\"%s\") + theme(plot.title = element_text(hjust = 1))\n",prefix);
+   fprintf(gfp1,"png(file=\"%s_Indel_plot_U.png\")\n", outfn);
+   fprintf(gfp1,"ggplot(data = indel, aes(x = factor(Len), y = pct_of_reads, fill=factor(Type, levels=c(\"C\",\"G\",\"T\",\"A\",\"Multi-nucleotide\")))) +  geom_bar(stat=\"identity\") + scale_fill_manual(values = c(\"lightsalmon4\",\"lightseagreen\",\"brown2\",\"gray30\",\"darkorange\")) + theme(legend.title = element_blank()) + scale_x_discrete(limits = indel_order) + ylab(\"%% of reads\") + labs(title=\"%s\") + xlab(\"Deletion                                                    Insertion\") + theme(plot.title = element_text(hjust = 1))\n",prefix);
 
    //fprintf(gfp1,"ggplot(data = indel, aes(x = factor(Len), y = pct_of_reads, fill=factor(Type, levels=c(\"C\",\"G\",\"T\",\"A\",\"Multi-nucleotide\")))) +  geom_bar(stat=\"identity\") + xlab(\"Deletion                                                    Insertion\") + scale_fill_manual(values = c(\"lightsalmon4\",\"lightseagreen\",\"brown2\",\"gray30\",\"darkorange\")) + theme(legend.position = \"bottom\", legend.direction = \"horizontal\") + theme(legend.title = element_blank()) + scale_x_discrete(limits = indel_order) + ylab(\"%% of reads\")\n");
    
-   fprintf(gfp1,"g2 <- ggplot(data = flnkshmap_indel, aes(y = Flanks, x = Length)) +  geom_tile(aes(fill = Pct), colour = \"white\",size =0.3) + scale_fill_gradient(\"flanks  (%%)\",low = \"gray95\",high = \"deeppink3\") + xlab(\"Deletion                                                    Insertion\") + ylab(\"flanking bases (5'_3')\") + scale_x_discrete(limits = indel_order) + theme(plot.margin=unit(c(-0.40,1.30,0.2,0.15), \"cm\"))\n");
+   //fprintf(gfp1,"g2 <- ggplot(data = flnkshmap_indel, aes(y = Flanks, x = Length)) +  geom_tile(aes(fill = Pct), colour = \"white\",size =0.3) + scale_fill_gradient(\"flanks  (%%)\",low = \"gray95\",high = \"deeppink3\") + xlab(\"Deletion                                                    Insertion\") + ylab(\"flanking bases (5'_3')\") + scale_x_discrete(limits = indel_order) + theme(plot.margin=unit(c(-0.40,1.30,0.2,0.15), \"cm\"))\n");
    
-   fprintf(gfp1,"gg1 <- ggplot_gtable(ggplot_build(g1))\n");
-   fprintf(gfp1,"gg2 <- ggplot_gtable(ggplot_build(g2))\n");
-   fprintf(gfp1,"maxWidth = grid::unit.pmax(gg1$widths[2:5], gg2$widths[2:5])\n");
-   fprintf(gfp1,"gg1$widths[2:5] <- as.list(maxWidth)\n");
-   fprintf(gfp1,"gg2$widths[2:5] <- as.list(maxWidth)\n");
-   fprintf(gfp1,"png(file=\"%s_Indel_plot_U.png\")\n", outfn);
-   fprintf(gfp1,"grid.arrange(gg1, gg2);\n");
+   //fprintf(gfp1,"gg1 <- ggplot_gtable(ggplot_build(g1))\n");
+   //fprintf(gfp1,"gg2 <- ggplot_gtable(ggplot_build(g2))\n");
+   //fprintf(gfp1,"maxWidth = grid::unit.pmax(gg1$widths[2:5], gg2$widths[2:5])\n");
+   //fprintf(gfp1,"gg1$widths[2:5] <- as.list(maxWidth)\n");
+   //fprintf(gfp1,"gg2$widths[2:5] <- as.list(maxWidth)\n");
+   //fprintf(gfp1,"png(file=\"%s_Indel_plot_U.png\")\n", outfn);
+   //fprintf(gfp1,"grid.arrange(gg1, gg2);\n");
    fprintf(gfp1,"dev.off()\n");
    fclose(gfp1);
    *outfn=0;
@@ -2200,7 +2200,7 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
 	fprintf(fp,"<li class=\"toctree-l1\" onmouseover=\"style.fontWeight = 'bold'\" onmouseout=\"style.fontWeight = 'normal'\"><a class=\"reference internal\" href=\"#Per base average quality\" style=\"color:#1C2833;\" >Per base average quality</a></li>\n");
 	fprintf(fp,"<li class=\"toctree-l1\" onmouseover=\"style.fontWeight = 'bold'\" onmouseout=\"style.fontWeight = 'normal'\"><a class=\"reference internal\" href=\"#Per base sequence content\" style=\"color:#1C2833;\" >Per base sequence content</a></li>\n");
 	fprintf(fp,"<li class=\"toctree-l1\" onmouseover=\"style.fontWeight = 'bold'\" onmouseout=\"style.fontWeight = 'normal'\"><a class=\"reference internal\" href=\"#GC content distribution\" style=\"color:#1C2833;\" >GC content distribution</a></li>\n");
-	fprintf(fp,"<li class=\"toctree-l1\" onmouseover=\"style.fontWeight = 'bold'\" onmouseout=\"style.fontWeight = 'normal'\"><a class=\"reference internal\" href=\"#Mapping quality distribution\" style=\"color:#1C2833;\" >Mapping quality distribution</a></li>\n");
+	fprintf(fp,"<li class=\"toctree-l1\" onmouseover=\"style.fontWeight = 'bold'\" onmouseout=\"style.fontWeight = 'normal'\"><a class=\"reference internal\" href=\"#Mapping quality distribution\" style=\"color:#1C2833;\" >Mapping quality profile</a></li>\n");
 	fprintf(fp,"<li class=\"toctree-l1\" onmouseover=\"style.fontWeight = 'bold'\" onmouseout=\"style.fontWeight = 'normal'\"><a class=\"reference internal\" href=\"#Insert size histogram\" style=\"color:#1C2833;\" >Insert size histogram</a></li>\n");
 	fprintf(fp,"<li class=\"toctree-l1\" onmouseover=\"style.fontWeight = 'bold'\" onmouseout=\"style.fontWeight = 'normal'\"><a class=\"reference internal\" href=\"#Mismatch counts\" style=\"color:#1C2833;\" >Mismatch counts</a></li>\n");
 	fprintf(fp,"<li class=\"toctree-l1\" onmouseover=\"style.fontWeight = 'bold'\" onmouseout=\"style.fontWeight = 'normal'\"><a class=\"reference internal\" href=\"#Basechange & quality\" style=\"color:#1C2833;\" >Basechange & quality</a></li>\n");
@@ -2835,7 +2835,7 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
 	fprintf(fp,"\n");
 	fprintf(fp,"<div class=\"row\">\n");
 	fprintf(fp,"<div class=\"column\">\n");
-	fprintf(fp,"<h3 id=\"Mapping quality distribution\" style=\"background-color:#FEF9E7;\" onmouseover=\"this.style.backgroundColor='#F9E79F';\" onmouseout=\"this.style.backgroundColor='#FEF9E7';\">Mapping quality distribution<a class=\"headerlink\" name=\"Overall_Mismatchplot_U1.png\" title=\"Permalink to this headline\">&nbsp;</a></h3>\n");
+	fprintf(fp,"<h3 id=\"Mapping quality distribution\" style=\"background-color:#FEF9E7;\" onmouseover=\"this.style.backgroundColor='#F9E79F';\" onmouseout=\"this.style.backgroundColor='#FEF9E7';\">Mapping quality profile<a class=\"headerlink\" name=\"Overall_Mismatchplot_U1.png\" title=\"Permalink to this headline\">&nbsp;</a></h3>\n");
 	fprintf(fp,"<div><img width=\"500\" height=\"500\" src=\"plots/Mapping_quality.png\"></div>\n");
 	fprintf(fp,"</div>\n");
 	fprintf(fp,"<div class=\"column\">\n");
