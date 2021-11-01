@@ -90,5 +90,5 @@ Options:
 	
 
 ```
-[ABC](https://github.com/SUBRATA-NSM/Test_html/blob/main/Test_output/Bamqc.html)
+[HTML-LINK](https://github.com/SUBRATA-NSM/Test_html/blob/main/Test_output/Bamqc.html)
 ![](https://github.com/SUBRATA-NSM/Test_html/blob/main/Test_output/plots/Basequality.png)
