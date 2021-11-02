@@ -90,5 +90,6 @@ Options:
 	
 
 ```
-[HTML-LINK](https://github.com/SUBRATA-NSM/Test_html/blob/main/Test_output/Bamqc.html)
+[Not_working](https://github.com/SUBRATA-NSM/Test_html/blob/main/Test_output/Bamqc.html)
+![](https://github.com/SUBRATA-NSM/Test_html/blob/main/Test_output/plots/Basequality.png)
 ![](https://github.com/SUBRATA-NSM/Test_html/blob/main/Test_output/plots/Basequality.png)
