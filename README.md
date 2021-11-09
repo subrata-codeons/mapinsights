@@ -90,6 +90,6 @@ Options:
 	
 
 ```
-[Example Mapinsights-bamqc report](https://subrata-nsm.github.io/Demo/Bamqc.html#GC%20content%20distribution)
-![](https://github.com/SUBRATA-NSM/Test_html/blob/main/Test_output/plots/Basequality.png)
+[Mapinsights-bamqc report (example)](https://subrata-nsm.github.io/Demo/Bamqc.html#GC%20content%20distribution)
+
 
