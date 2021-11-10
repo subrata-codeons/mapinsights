@@ -91,5 +91,6 @@ Options:
 
 ```
 [Mapinsights-bamqc report (example)](https://subrata-nsm.github.io/Demo/Bamqc.html#GC%20content%20distribution)
+[Mapinsights-genedepth report (example)](https://subrata-nsm.github.io/Demo/Bamqc.html#GC%20content%20distribution)
 
 
