@@ -67,7 +67,7 @@ void jumpreads_help()
    
    fp = bam_open(prmtr->bam_file, "r");
    ofp = bam_open(prmtr->out_file, "w");
-   //printf("I am here1\n");
+   
    if(fp==NULL) { printf("Unable to open input BAM file\n"); return 1;}
    if(ofp==NULL) { printf("Unable to open output BAM file\n"); return 1;}
    xheader=bam_header_init();

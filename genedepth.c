@@ -1,9 +1,4 @@
-/* This program demonstrates how to generate pileup from multiple BAMs
- * simutaneously, to achieve random access and to use the BED interface.
- * To compile this program separately, you may:
- *
- *   gcc -g -O2 -Wall -o bam2depth -D_MAIN_BAM2DEPTH bam2depth.c -L. -lbam -lz
- */
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -12,17 +7,17 @@
 #include <time.h>
 #include "bam.h"
 #include "faidx.h"
-typedef struct {     // auxiliary data structure
-	bamFile fp;      // the file handler
-	bam_iter_t iter; // NULL if a region not specified
-	int min_mapQ, min_len; // mapQ filter; length filter
+typedef struct {     
+	bamFile fp;      
+	bam_iter_t iter; 
+	int min_mapQ, min_len; 
 } aux_t;
 
 
-// This function reads a BAM alignment from one BAM file.
-static int read_bam(void *data, bam1_t *b) // read level filters better go here to avoid pileup
+
+static int read_bam(void *data, bam1_t *b) 
 {
-	aux_t *aux = (aux_t*)data; // data in fact is a pointer to an auxiliary structure
+	aux_t *aux = (aux_t*)data; 
 	int ret = aux->iter? bam_iter_read(aux->fp, aux->iter, b) : bam_read1(aux->fp, b);
 	if (!(b->core.flag&BAM_FUNMAP)) {
 		if ((int)b->core.qual < aux->min_mapQ) b->core.flag |= BAM_FUNMAP;
@@ -38,7 +33,7 @@ static int read_bam(void *data, bam1_t *b) // read level filters better go here 
    char *outfn=0;
    outfn = calloc(strlen(outdir) + 500, 1);
    sprintf(outfn, "%s/plotsmake.r", outdir);
-   //printf("Outfile : %s\n",outfn);
+   
    gfp1=fopen(outfn,"w");
    fprintf(gfp1,"library (\"ggplot2\")\n");
 
@@ -359,7 +354,7 @@ fprintf(fp,"</table>\n");
    
    fprintf(fp,"\n");
 	fprintf(fp,"    <div class=\"fixed-footer\">\n");
-	fprintf(fp,"        <div class=\"container\">NIBMG</div>        \n");
+	fprintf(fp,"        <div style=\"color:white; font-size:100%%; float: right; padding-right: 20px; class=\"container\">Created by Mapinsights (version 1.0) </div>\n");
 	fprintf(fp,"    </div>\n");
 	fprintf(fp,"</body>\n");
 	fprintf(fp,"</html>\n");
@@ -412,7 +407,7 @@ int main_genedepth(int argc, char *argv[])
 {
 	int i, n,j, tid, beg, end, pos, prepos, *n_plp;
 	const bam_pileup1_t *q,*p;
-	bam_header_t *h = 0; // BAM header of the 1st input
+	bam_header_t *h = 0; 
 	aux_t *data;
         faidx_t *fai;
 	bam_plp_t mplp;
@@ -462,22 +457,21 @@ int main_genedepth(int argc, char *argv[])
 	fprintf(ofp1,"Bed file = %s\n\n",pmtr->bed_file);
         
 	outfn = calloc(strlen(pmtr->out_foldr) + 500, 1);
-        //n = argc - optind; // the number of BAMs on the command line
+        
 	n=1;
-	data = calloc(n, sizeof(void*)); // data[i] for the i-th input
-	beg = 0; end = 1<<30; tid = -1;  // set the default region
-	        //chrpos=calloc(500,1);
+	data = calloc(n, sizeof(void*)); 
+	beg = 0; end = 1<<30; tid = -1;  
+	        
 		bam_header_t *htmp;
                
 		data = calloc(1, sizeof(aux_t));
-		//data[i]->fp = bam_open(argv[optind+i], "r"); // open BAM
+		
 		data->fp = bam_open(pmtr->bam_file, "r");
-		//data[i]->min_mapQ = mapQ;                    // set the mapQ filter
-		//data[i]->min_len  = min_len;                 // set the qlen filter
+		
 		time_t t;
 		time(&t);
 		fprintf(ofp1,"Analysis date = %s", ctime(&t));
-		htmp = bam_header_read(data->fp);         // read the BAM header
+		htmp = bam_header_read(data->fp);        
 		for(i=0; i< htmp->n_targets; i++)
                {
                    ref_size += htmp->target_len[i];
@@ -487,7 +481,7 @@ int main_genedepth(int argc, char *argv[])
                fprintf(ofp1,"Reference size (bp) = %ld\n\n", ref_size);
                 fai = fai_load(pmtr->ref_file);
                 tid0 = tid;
-        if (tid0 >= 0 && fai) { // region is set
+        if (tid0 >= 0 && fai) { 
                 ref = faidx_fetch_seq(fai, htmp->target_name[tid0], 0, 0x7fffffff, &ref_len);
                 ref_tid = tid0;
 
@@ -521,13 +515,13 @@ int main_genedepth(int argc, char *argv[])
                  bam_parse_region(h, chrpos, &tid, &beg, &end);}
 
 
-		 //bam_header_destroy(htmp); // if not the 1st BAM, trash the header
+		 
 
 		if (tid >= 0) 
 		{ 
-			//bam_index_t *idx = bam_index_load(argv[1]);
-			data->iter = bam_iter_query(idx, tid, beg, end); // set the iterator
-			//bam_index_destroy(idx); 
+			
+			data->iter = bam_iter_query(idx, tid, beg, end); 
+			 
                         
 		
 	
@@ -537,12 +531,11 @@ int main_genedepth(int argc, char *argv[])
                         ref_tid = tid;}
 
                 }
-//printf("A%s\n",chrpos);
-        //printf("%s    ref_base = %c	",chrpos, toupper(ref[beg]));
+
         pct1=0; pct5=0; pct10=0; pct20=0; pct30=0; totdepth=0; esize=0;
         esize = (end-beg);
         totesize += esize;
-        //printf("beg=%d	end=%d	esize = %d cum size = %d\n",beg, end, esize, totesize);
+        
         gc=0;
         for(i = beg ; i < end; i++) {if(toupper(ref[i]) == 'G' || toupper(ref[i]) == 'C') {gc++;}}
         *outfn=0;
@@ -550,7 +543,7 @@ int main_genedepth(int argc, char *argv[])
         ofp=fopen(outfn,"w");
         fprintf(ofp,"pos	type	depth\n");
 	mplp = bam_plp_init(read_bam, (void*)data); 
-	//n_plp = calloc(n, sizeof(int)); 
+	 
 	n=1;
         j=0;
 	while((q=bam_plp_auto(mplp, &tid, &pos, n_plp)))
@@ -568,9 +561,9 @@ int main_genedepth(int argc, char *argv[])
           if (p->is_del || p->is_refskip) {dedepth++;}
           else if(bam_nt16_rev_table[bam1_seqi(bam1_seq(p->b),p->qpos)] != toupper(ref[pos])) {var_cnt++;}
           else {ref_cnt++;}
-          //printf("%c",bam_nt16_rev_table[bam1_seqi(bam1_seq(p->b),p->qpos)]);
+          
           }
-          //printf("\n");
+          
           if((ref_cnt-dedepth) > 0) 
           {
               fprintf(ofp,"%d	ref	%d\n", pos+1, ref_cnt-dedepth);

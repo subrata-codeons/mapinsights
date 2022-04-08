@@ -1,9 +1,4 @@
-/* This program demonstrates how to generate pileup from multiple BAMs
- * simutaneously, to achieve random access and to use the BED interface.
- * To compile this program separately, you may:
- *
- *   gcc -g -O2 -Wall -o bam2depth -D_MAIN_BAM2DEPTH bam2depth.c -L. -lbam -lz
- */
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -11,17 +6,17 @@
 #include <ctype.h>
 #include "bam.h"
 #include "faidx.h"
-typedef struct {     // auxiliary data structure
-	bamFile fp;      // the file handler
-	bam_iter_t iter; // NULL if a region not specified
-	int min_mapQ, min_len; // mapQ filter; length filter
+typedef struct {     
+	bamFile fp;      
+	bam_iter_t iter; 
+	int min_mapQ, min_len; 
 } aux_t;
 
 
-// This function reads a BAM alignment from one BAM file.
-static int read_bam(void *data, bam1_t *b) // read level filters better go here to avoid pileup
+
+static int read_bam(void *data, bam1_t *b) 
 {
-	aux_t *aux = (aux_t*)data; // data in fact is a pointer to an auxiliary structure
+	aux_t *aux = (aux_t*)data; 
 	int ret = aux->iter? bam_iter_read(aux->fp, aux->iter, b) : bam_read1(aux->fp, b);
 	if (!(b->core.flag&BAM_FUNMAP)) {
 		if ((int)b->core.qual < aux->min_mapQ) b->core.flag |= BAM_FUNMAP;
@@ -46,7 +41,7 @@ static int read_bam(void *data, bam1_t *b) // read level filters better go here 
  }
  void prntheader()
  {
-   //printf("# mapinsites siteinfo output\n");
+   
    printf("# For each input site, there are two blocks in the output. The first output block provides information like genomic coordinates, reference-base, 20bp flanks with GC%% and depth. Depending on the depth the second block provides following information as listed\n");
    printf("# 1st column  : Aligned bases at input position\n");
    printf("# 2nd column  : Quality value of aligned bases at input position\n");
@@ -69,7 +64,7 @@ int main_siteinfo(int argc, char *argv[])
 {
 	int i, n,j, tid, beg, end, pos, *n_plp;
 	const bam_pileup1_t *q,*p;
-	bam_header_t *h = 0; // BAM header of the 1st input
+	bam_header_t *h = 0; 
 	aux_t *data;
         faidx_t *fai;
 	bam_plp_t mplp;
@@ -148,14 +143,12 @@ int main_siteinfo(int argc, char *argv[])
 		bam_header_t *htmp;
                
 		data = calloc(1, sizeof(aux_t));
-		//data[i]->fp = bam_open(argv[optind+i], "r"); // open BAM
+		
 		data->fp = bam_open(pmtr->bam_file, "r");
-		//data[i]->min_mapQ = mapQ;                    // set the mapQ filter
-		//data[i]->min_len  = min_len;                 // set the qlen filter
-		htmp = bam_header_read(data->fp);         // read the BAM header
+		htmp = bam_header_read(data->fp);         
                 fai = fai_load(pmtr->ref_file);
                 tid0 = tid;
-        if (tid0 >= 0 && fai) { // region is set
+        if (tid0 >= 0 && fai) { 
                 ref = faidx_fetch_seq(fai, htmp->target_name[tid0], 0, 0x7fffffff, &ref_len);
                 ref_tid = tid0;
 
@@ -169,9 +162,9 @@ int main_siteinfo(int argc, char *argv[])
 
 		if (tid >= 0) 
 		{ 
-			//bam_index_t *idx = bam_index_load(argv[1]);
-			data->iter = bam_iter_query(idx, tid, beg, end); // set the iterator
-			//bam_index_destroy(idx); 
+			
+			data->iter = bam_iter_query(idx, tid, beg, end); 
+			 
                         
 		
 	
@@ -260,12 +253,12 @@ int main_siteinfo(int argc, char *argv[])
                 while((ch=fgetc(ifp))!=EOF)
                 {
                    j=0;
-                   //printf("I am inside\n");
+                   
                    tchr[j]=ch;j++;
                    while(((ch=fgetc(ifp))!='	'))
                    {tchr[j]=ch;j++;}
                    tchr[j]='\0';j=0;
-                   //printf("I am inside1\n");
+                   
                    while(((ch=fgetc(ifp))!='	'))
                    {
                     if(ch != '\n')
@@ -274,25 +267,24 @@ int main_siteinfo(int argc, char *argv[])
                     }
                     else {break;}
                    }
-                   //printf("I am inside2\n");
+                   
                    tpos[j]='\0';
                    if(ch != '\n') {while((ch=fgetc(ifp))!='\n');}
-                   //printf("%s\n",tchr);
-                   //printf("%s\n",tpos);
+                   
                    sprintf(chrpos,"%s:%s-%s",tchr,tpos,tpos);
-                //printf("%s\n",chrpos);
+                
                    
 		if (strlen(chrpos) > 0){
                  bam_parse_region(h, chrpos, &tid, &beg, &end);}
 
 
-		 //bam_header_destroy(htmp); // if not the 1st BAM, trash the header
+		 
 
 		if (tid >= 0) 
 		{ 
-			//bam_index_t *idx = bam_index_load(argv[1]);
-			data->iter = bam_iter_query(idx, tid, beg, end); // set the iterator
-			//bam_index_destroy(idx); 
+			
+			data->iter = bam_iter_query(idx, tid, beg, end); 
+			 
                         
 		
 	
@@ -322,13 +314,7 @@ int main_siteinfo(int argc, char *argv[])
         }
         
         
-        /*printf("%s    ref_base = %c	",chrpos, toupper(ref[beg]));
-        n=0;
-        for(i=10;i>0;i--) {printf("%c",toupper(ref[beg-i])); if(toupper(ref[beg-i])=='C' || toupper(ref[beg-i])=='G') {n++;}}
-        printf(" %c ",toupper(ref[beg]));
-        for(i=1;i<=10;i++) {printf("%c",toupper(ref[beg+i])); if(toupper(ref[beg+i])=='C' || toupper(ref[beg+i])=='G') {n++;}}
-        printf("	GC%%[in 20bp flanks] = %.2f	", ((float)n/20.0)*100);*/
-
+        
 	mplp = bam_plp_init(read_bam, (void*)data); 
 	n_plp = calloc(1, sizeof(int)); 
 
@@ -392,21 +378,14 @@ if(pmtr->out_file) {fclose(ofp);}
 	
 		
 	
-	//free(n_plp); //free(plp);
+	
 	bam_plp_destroy(mplp);
         bam_index_destroy(idx);
 	bam_header_destroy(h);
 	bam_close(data->fp);
 	bam_iter_destroy(data->iter);
 	free(ref);
-	free(data); //free(reg);
+	free(data); 
 	return 0;
 }
-	/*if (bed) bed_destroy(bed);
-    if ( file_list )
-    {
-        for (i=0; i<n; i++) free(fn[i]);
-        free(fn);
-    }
-	return 0;*/
-//}
+

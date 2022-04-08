@@ -508,7 +508,7 @@ void Addup_u_u(log_v *OA, log_v *r12, log_v *rfr, log_v *t, int flag, int rLen, 
   {
       for(j=0;j<rLen;j++)
       {
-          OA->rmmc[i].rd_posi[j]+=t->rmmc[i].rd_posi[j]; // Total substitution rate
+          OA->rmmc[i].rd_posi[j]+=t->rmmc[i].rd_posi[j]; 
           rfr->rmmc[i].rd_posi[j]+=t->rmmc[i].rd_posi[j]; 
           if(flag) {t->rmmc[i].rd_posi[j]=0;}
       }
@@ -527,7 +527,7 @@ void Addup_u_u(log_v *OA, log_v *r12, log_v *rfr, log_v *t, int flag, int rLen, 
   {
       for(j=0;j<rLen;j++)
       {
-          OA->rmmc[i].rd_posi[j]+=t->rmmc[i].rd_posi[(rLen-1)-j]; // Total substitution rate
+          OA->rmmc[i].rd_posi[j]+=t->rmmc[i].rd_posi[(rLen-1)-j]; 
           rfr->rmmc[i].rd_posi[j]+=t->rmmc[i].rd_posi[(rLen-1)-j]; 
           if(flag) {t->rmmc[i].rd_posi[(rLen-1)-j]=0;}
       }
@@ -750,7 +750,7 @@ void get_seqInfo(bam1_t *b, char *ref, int ref_len, log_v *T, log_v *OA, int rea
 	 int LOG[12], Acnt=0, Tcnt=0, Gcnt=0, Ccnt=0, Ncnt,iSize=0;
 	 char CLP[200];
          uint32_t *cigar = bam_get_cigar(b);
-         //////////////////Added on 25Sep202///////////////////////
+         
          T->glog.tot_rd_cnt++;
          if( b->core.flag & BAM_FPAIRED) {T->glog.map_pr++;}
          if( b->core.flag & BAM_FPROPER_PAIR) {T->glog.propr_pr++;}
@@ -1236,21 +1236,20 @@ void PrintLogFiles(log_v *OA, int type, int rLen, char *outdir)
       }
       int kk, ii, rdpos_total[rLen];
       long int totl=0;
-      //printf("Miss-matchs logs::\n");
+      
       
       fprintf(fp1,"Missmatch	pct_of_reads\n");
       for(kk=0;kk<4;kk++) 
       {fprintf(fp1,"%d	%lf\n",kk+1,((OA->tmmc[kk]/(double)OA->cnt)*100));}
       fprintf(fp1,">=5	%lf\n",((OA->tmmc[4]/(double)OA->cnt)*100));
       
-      ////*updated on 19Apr2021 start*///
+      
       fprintf(fp1c,"Missmatch	no_of_reads\n");
       fprintf(fp1c,"0	%ld\n",(OA->cnt - (OA->tmmc[0]+OA->tmmc[1]+OA->tmmc[2]+OA->tmmc[3]+OA->tmmc[4])));
       for(kk=0;kk<4;kk++)
       {fprintf(fp1c,"%d	%ld\n",kk+1, OA->tmmc[kk]);}
       fprintf(fp1c,">=5	%ld\n",OA->tmmc[4]);
-      ////*updated on 19Apr2021 end*///
-      //printf("\n");
+      
       fprintf(fp2,"Len	Type	pct_of_reads\n");
       fprintf(fp2,"0	A	0\n");
       fprintf(fp2,"-1	A	%lf\n",((OA->Del1.A/(double)OA->cnt)*100));
@@ -1799,14 +1798,7 @@ void PrintLogFiles(log_v *OA, int type, int rLen, char *outdir)
       fprintf(gfp1,"BaseQ	Basecounts\n");
       for(ii=0;ii<=MAX_BASEQ;ii++) {fprintf(gfp1,"%d	%ld\n",ii,T->glog.BaseQ_dist[ii]);}
       fclose(gfp1);
-      //printf("MapQ	No_of_reads\n");
-      //printf("0	%d	%f\n", T->glog.MapQ_bin_dist[1], ((float)T->glog.MapQ_bin_dist[1]/(float)T->glog.tot_rd_cnt)*100);
-      //printf("1-10	%d	%f\n", T->glog.MapQ_bin_dist[2], ((float)T->glog.MapQ_bin_dist[2]/(float)T->glog.tot_rd_cnt)*100);
-      //printf("11-20	%d	%f\n", T->glog.MapQ_bin_dist[3], ((float)T->glog.MapQ_bin_dist[3]/(float)T->glog.tot_rd_cnt)*100);
-      //printf("21-30	%d	%f\n", T->glog.MapQ_bin_dist[4], ((float)T->glog.MapQ_bin_dist[4]/(float)T->glog.tot_rd_cnt)*100);
-      //printf("31-40	%d	%f\n", T->glog.MapQ_bin_dist[5], ((float)T->glog.MapQ_bin_dist[5]/(float)T->glog.tot_rd_cnt)*100);
-      //printf("41-50	%d	%f\n", T->glog.MapQ_bin_dist[6], ((float)T->glog.MapQ_bin_dist[6]/(float)T->glog.tot_rd_cnt)*100);
-      //printf(">50	%d	%f\n", T->glog.MapQ_bin_dist[7], ((float)T->glog.MapQ_bin_dist[7]/(float)T->glog.tot_rd_cnt)*100);
+      
       
       *outfn=0;
       sprintf(outfn, "%s/Overall_Mappingquality_bin_dist.txt", outdir);
@@ -1883,22 +1875,21 @@ void PrintLogFiles(log_v *OA, int type, int rLen, char *outdir)
       fprintf(gfp1,"baseq <- read.table(\"%s/Overall_Basequality_dist.txt\",header = TRUE, sep = \"\\t\")\n", outdir);
       fprintf(gfp1,"calmean <- function(baseq)\n");
       fprintf(gfp1,"with(baseq, as.double(sum(as.double(BaseQ*(Basecounts/100000))))/as.double(as.double(sum(Basecounts/100000))))\n");
-      //fprintf(gfp1,"with(baseq, as.double(sum(as.double(BaseQ*Basecounts))/as.numeric(sum(Basecounts)))\n");
-      //fprintf(gfp1,"round(calmean(baseq),2)\n");
+      
       fprintf(gfp1,"mean <- paste(\"Mean basequality =\", round(calmean(baseq),2))\n");
       fprintf(gfp1,"write(mean, file=\"%s/Overall_mapping_summary.log\", append=TRUE)\n", outdir);
 
       fprintf(gfp1,"mapq <- read.table(\"%s/Overall_Mappingquality_dist.txt\",header = TRUE, sep = \"\\t\")\n", outdir);
       fprintf(gfp1,"calmean <- function(mapq)\n");
       fprintf(gfp1,"with(mapq, as.double(sum(as.double(MapQ*(No_of_reads/10000))))/as.double(as.double(sum(No_of_reads/10000))))\n");
-      //fprintf(gfp1,"with(mapq, as.numeric(sum(MapQ*No_of_reads))/as.numeric(sum(No_of_reads)))\n");
+      
       fprintf(gfp1,"mean <- paste(\"Mean mapping quality =\" ,round(calmean(mapq),2))\n");
       fprintf(gfp1,"write(mean, file=\"%s/Overall_mapping_summary.log\", append=TRUE)\n", outdir);
 
       fprintf(gfp1,"rlen <- read.table(\"%s/Overall_Readlength_dist.txt\",header = TRUE, sep = \"\\t\")\n", outdir);
       fprintf(gfp1,"calmean <- function(rlen)\n");
       fprintf(gfp1,"with(rlen, as.double(sum(as.double(Length*(No_of_reads/10000))))/as.double(as.double(sum(No_of_reads/10000))))\n");
-      //fprintf(gfp1,"with(rlen, as.numeric(sum(Length*No_of_reads))/as.numeric(sum(No_of_reads)))\n");
+      
       fprintf(gfp1,"mean <- paste(\"Mean read length =\" ,round(calmean(rlen),2))\n");
       fprintf(gfp1,"write(mean, file=\"%s/Overall_mapping_summary.log\", append=TRUE)\n", outdir);
       
@@ -1912,7 +1903,7 @@ void PrintLogFiles(log_v *OA, int type, int rLen, char *outdir)
       sprintf(outfn, "rm -f %s/Add_log.*", outdir);
       system(outfn);
       system("rm -f Add_log.*");
-      //free(outfn);
+      
    }
    free(outfn);
  }
@@ -1931,7 +1922,7 @@ void PrintLogFiles(log_v *OA, int type, int rLen, char *outdir)
    gfp1=fopen(outfn,"w");
    fprintf(gfp1,"library (\"ggplot2\")\n");
    
-   ////*updated on 19Apr2021 start*///
+   
    fprintf(gfp1,"r1_fs <- read.table(\"%s/Read1_fs_SN_MM_count.txt\", header = TRUE, sep = \"\\t\")\n", outdir);
    fprintf(gfp1,"r1_rs <- read.table(\"%s/Read1_rs_SN_MM_count.txt\", header = TRUE, sep = \"\\t\")\n", outdir);
    fprintf(gfp1,"r2_fs <- read.table(\"%s/Read2_fs_SN_MM_count.txt\", header = TRUE, sep = \"\\t\")\n", outdir);
@@ -1976,8 +1967,7 @@ void PrintLogFiles(log_v *OA, int type, int rLen, char *outdir)
    *outfn=0;
    sprintf(outfn, "R CMD BATCH %s/plotsmake.r", outdir);
    system(outfn);
-   //printf("Command :: %s\n", outfn);
-   //printf("Plots Created\n");
+
    *outfn=0;
    sprintf(outfn, "rm -f %s/plotsmake.r", outdir);
    system(outfn);
@@ -2064,23 +2054,12 @@ void PrintLogFiles(log_v *OA, int type, int rLen, char *outdir)
       
    fprintf(gfp1,"indel <- read.table(\"%s_INDEL_MM.txt\",header = TRUE, sep = \"\t\")\n", outfn);
    fprintf(gfp1,"indel_order <- c(\">=-5\",\"-4\",\"-3\",\"-2\",\"-1\",\"0\",\"+1\",\"+2\",\"+3\",\"+4\",\">=+5\")\n");
-   //fprintf(gfp1,"flnkshmap_indel <- read.table(\"%s_INDEL_MM_flanks.txt\",header = TRUE, sep = \"\t\")\n", outfn);
+   
    
    
    fprintf(gfp1,"png(file=\"%s_Indel_plot_U.png\")\n", outfn);
    fprintf(gfp1,"ggplot(data = indel, aes(x = factor(Len), y = pct_of_reads, fill=factor(Type, levels=c(\"C\",\"G\",\"T\",\"A\",\"Multi-nucleotide\")))) +  geom_bar(stat=\"identity\") + scale_fill_manual(values = c(\"lightsalmon4\",\"lightseagreen\",\"brown2\",\"gray30\",\"darkorange\")) + theme(legend.title = element_blank()) + scale_x_discrete(limits = indel_order) + ylab(\"%% of reads\") + labs(title=\"%s\") + xlab(\"Deletion                                                    Insertion\") + theme(plot.title = element_text(hjust = 1))\n",prefix);
 
-   //fprintf(gfp1,"ggplot(data = indel, aes(x = factor(Len), y = pct_of_reads, fill=factor(Type, levels=c(\"C\",\"G\",\"T\",\"A\",\"Multi-nucleotide\")))) +  geom_bar(stat=\"identity\") + xlab(\"Deletion                                                    Insertion\") + scale_fill_manual(values = c(\"lightsalmon4\",\"lightseagreen\",\"brown2\",\"gray30\",\"darkorange\")) + theme(legend.position = \"bottom\", legend.direction = \"horizontal\") + theme(legend.title = element_blank()) + scale_x_discrete(limits = indel_order) + ylab(\"%% of reads\")\n");
-   
-   //fprintf(gfp1,"g2 <- ggplot(data = flnkshmap_indel, aes(y = Flanks, x = Length)) +  geom_tile(aes(fill = Pct), colour = \"white\",size =0.3) + scale_fill_gradient(\"flanks  (%%)\",low = \"gray95\",high = \"deeppink3\") + xlab(\"Deletion                                                    Insertion\") + ylab(\"flanking bases (5'_3')\") + scale_x_discrete(limits = indel_order) + theme(plot.margin=unit(c(-0.40,1.30,0.2,0.15), \"cm\"))\n");
-   
-   //fprintf(gfp1,"gg1 <- ggplot_gtable(ggplot_build(g1))\n");
-   //fprintf(gfp1,"gg2 <- ggplot_gtable(ggplot_build(g2))\n");
-   //fprintf(gfp1,"maxWidth = grid::unit.pmax(gg1$widths[2:5], gg2$widths[2:5])\n");
-   //fprintf(gfp1,"gg1$widths[2:5] <- as.list(maxWidth)\n");
-   //fprintf(gfp1,"gg2$widths[2:5] <- as.list(maxWidth)\n");
-   //fprintf(gfp1,"png(file=\"%s_Indel_plot_U.png\")\n", outfn);
-   //fprintf(gfp1,"grid.arrange(gg1, gg2);\n");
    fprintf(gfp1,"dev.off()\n");
    fclose(gfp1);
    *outfn=0;
@@ -2102,7 +2081,7 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
   int i;
   float misize, mbasq, mmapq, mrdln;
   char ch, *outfn=0;
-  //printf("I am in Html\n");
+  
   outfn = calloc(strlen(prmtr->outdir) + 500, 1);
   sprintf(outfn, "%s/Overall_mapping_summary.log", prmtr->outdir);
   //printf("Log file = %s\n",outfn);
@@ -2948,7 +2927,7 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
 	fprintf(fp,"\n");
 	fprintf(fp,"\n");
 	fprintf(fp,"    <div class=\"fixed-footer\">\n");
-	fprintf(fp,"        <div class=\"container\">NIBMG</div>        \n");
+	fprintf(fp,"        <div style=\"color:white; font-size:100%%; float: right; padding-right: 20px; class=\"container\">Created by Mapinsights (version 1.0) </div>\n");
 	fprintf(fp,"    </div>\n");
 	fprintf(fp,"</body>\n");
 	fprintf(fp,"</html>\n");
@@ -2985,7 +2964,7 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
    fprintf(stderr, "	-b  bed file	regions (BED) [null]\n");
    fprintf(stderr, "	-i  input file	Alignment file (BAM)\n");
    fprintf(stderr, "	-o  path to output folder	[./]\n");
-   //fprintf(stderr, "	-t  no of threads	[1]\n");
+   
    fprintf(stderr, "	-x  exclude read groups listed in FILE, one per line [null]\n");
    fprintf(stderr, "	-h  help\n");
    fprintf(stderr, "\n");
@@ -3039,23 +3018,17 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
    int rLen=100, rLenMax=0, read_ovrlp_st, read_ovrlp_nd,i;
    log_v *T,*OA, *RD1, *RD2, *RD1_FS, *RD1_RS, *RD2_FS, *RD2_RS;
    paramtr *prmtr;
-   //####### Added on 22Sep2020 ###############
-   //log_genrl *glog;
-   //long int Acnt=0, Tcnt=0, Gcnt=0, Ccnt=0, Ncnt=0, iSize;
-   //long int A1cnt=0, T1cnt=0, G1cnt=0, C1cnt=0, N1cnt=0;
-   //char *outdir, *ref_file, *bed_file, *bam_file;
+   
    void *bed = 0;
    
    prmtr = calloc(1, sizeof(paramtr));
-   //printf("I am here0\n");
-   //prmtr->thrd = 1;
+   
    while ((n = getopt(argc, argv, "r:b:i:o:t:x:h")) >= 0) {
 		switch (n) {
-			 case 'r': prmtr->ref_file = optarg; break; // reference file
+			  case 'r': prmtr->ref_file = optarg; break; // reference file
                          case 'b': prmtr->bed_file = optarg; break; // bed file
-			 case 'i': prmtr->bam_file = optarg; break; // Input bam file
-			 case 'o': prmtr->outdir = optarg; break; // output folder path
-                         //case 't': prmtr->thrd = atoi(optarg); break;
+			  case 'i': prmtr->bam_file = optarg; break; // Input bam file
+			  case 'o': prmtr->outdir = optarg; break; // output folder path
                          case 'x': prmtr->xrg_file = optarg; break;
                          case 'h': bamqc_help(); return 1; break;
                         }
@@ -3084,19 +3057,15 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
    printf("Version: 1.0\n\n");
    printf("command :: mapinsights %s\n\n", prmtr->comnd);
 
-   //if(prmtr->thrd < 1) {printf("%d thread not allowed.\n", prmtr->thrd); return 1;}
-   //xcore=bam_init1();
-   //printf("I am here\n");
-   //printf("No of threads = %d\n", prmtr->thrd);
-   //ref_size = 3137454505;
+   
    seqcount = getseqcount(prmtr->bam_file);
    
    fp = bam_open(prmtr->bam_file, "r");
-   //printf("I am here1\n");
+   
    if(fp==NULL) { printf("Unable to open BAM file\n"); return 1;}
    fai = fai_load(prmtr->ref_file);
    if (fai == 0) { printf("Unable to open reference file\n"); return 1;}
-   //printf("I am here2\n");
+   
    if(prmtr->bed_file) {bed = bed_read_new(prmtr->bed_file, &prmtr->trgtsize);} //BED
    
    ii=0;
@@ -3114,18 +3083,18 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
      printf("RG exclude list\n");
      for(k=0; k<prmtr->xrg_cnt; k++) {printf("%s\n",prmtr->x_rg[k]);}
    }
-   //printf("I am here3\n");
+   
       beg = 0; end = 1<<30; tid = -1;
       xheader=bam_header_init();
       xheader=bam_header_read(fp);
       for(i=0; i< xheader->n_targets; i++)
       {
         prmtr->ref_size+=xheader->target_len[i];
-        //printf("%s	%d\n", xheader->target_name[i], xheader->target_len[i]);
+        
       }
       prmtr->no_of_contigs = xheader->n_targets;
       b=bam_init1();
-      //printf("%s\n",xheader->text);
+      
       if ((rr = strstr(xheader->text, "@RG\t")) == 0) 
       {
           printf("RG tag is missing\n");
@@ -3169,13 +3138,7 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
         
       }
       
-      //printf("Library =%s\n",prmtr->library);
-      //printf("Sample nmae =%s\n",prmtr->sample_name);
-      //printf("No of rg = %d\n", prmtr->no_of_rgs);
-      //for(k=0;k<prmtr->no_of_rgs;k++)
-      //{printf("%s\n",prmtr->sId[k]);}
-      //*ss='\0';
-      //printf("sample length = %d\n",k);
+      
       
       ri = calloc(1, sizeof(read_info_t));
       T = calloc(1, sizeof(log_v));
@@ -3187,7 +3150,7 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
       RD2_FS = calloc(1, sizeof(log_v));
       RD2_RS = calloc(1, sizeof(log_v));
       
-         //printf("Target size = %ld\n", trgtsize);
+         
         tid0 = tid;
         if (tid0 >= 0 && fai) { // region is set
 		ref = faidx_fetch_seq(fai, xheader->target_name[tid0], 0, 0x7fffffff, &ref_len);
@@ -3201,9 +3164,7 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
          uint8_t *seq = bam1_seq(b); //, *qual = bam1_qual(b);
          
          uint32_t *cigar = bam_get_cigar(b);
-         //cumsize += x; cumsize1+=x-4;
-         //printf("x= %d	x-4= %d cumsize= %ld\n", x, x-4, cumsize);
-         //printf("%.2f %% complete\n", ((float)OA->glog.all_rd_cnt/(float)seqcount)*100);
+         
          
          if( progrs == (int)(5*seqcount/100)+5) {printf("%d%% complete\n",5*progrs_bincnt); progrs=0; progrs_bincnt++;}
          progrs++;
@@ -3211,16 +3172,15 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
          if (b->core.flag & BAM_FUNMAP) {OA->glog.unmap++; continue;}
          
          read_ovrlp_st = 0; read_ovrlp_nd = b->core.l_qseq;
-         //printf("Initial::%d     %d\n",read_ovrlp_st, read_ovrlp_nd);
+         
          read_end = bam_calend(&b->core, bam1_cigar(b));
          if (bed && bed_overlap_u(bed, xheader->target_name[b->core.tid], b->core.pos, read_end, &read_ovrlp_st, &read_ovrlp_nd) == 0) continue;
-         //printf("Read group = %s\n",bam_aux_get(b, "RG"));
-         //printf("rdst=%d rdnd=%d\n", read_ovrlp_st, read_ovrlp_nd);
+         
          if(prmtr->xrg_file && prmtr->xrg_cnt > 0) {
          ii=0; 
          uint8_t *rg=bam_aux_get(b, "RG");
          if(rg) { 
-         //while(rr[ii+1] != '\0') { r_rg[ii]=rr[ii+1]; ii++;} r_rg[ii]='\0';
+         
          rg++;
          if(checkRG(prmtr->x_rg, prmtr->xrg_cnt, rg)) { printf("Exclude SAM records with RG:ID = %s\n", rg); continue;}
          }
@@ -3262,96 +3222,59 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
 		}
          
          ri->dif_count=0;
-         //////////Test mismatch counts/////////
+         
          rd_pos=0;rf_pos=b->core.pos;
-          //printf("I am here\n");
-          for (k = 0 ; k < b->core.n_cigar ; ++k)
-          {
-
-                int l = cigar[k]>>4;
-                int op = cigar[k]&0xf;
-                //printf("I am here1\n");
-                if(op == BAM_CMATCH || op == BAM_CEQUAL || op == BAM_CDIFF)
-                {
-                   
-                   for( i=0; i<l; i++)
-                   {
-                       
-                       if(bam_nt16_rev_table[bam1_seqi(seq,rd_pos+i)] != ((ref && (rf_pos+i) < ref_len)? toupper(ref[rf_pos+i]) : 'N'))
-                       {
-                       
-                         if(bam_nt16_rev_table[bam1_seqi(seq,rd_pos+i)]!='N' || toupper(ref[rf_pos+i])!='N')
-                         {
-                          //printf("%s	%d	%c %c %c -> %c %c %c\n",xheader->target_name[b->core.tid], rf_pos+i, toupper(ref[rf_pos+i-1]), toupper(ref[rf_pos+i]), toupper(ref[rf_pos+i+1]), toupper(ref[rf_pos+i-1]), bam_nt16_rev_table[bam1_seqi(seq,rd_pos+i)], toupper(ref[rf_pos+i+1]));
-                          mm_cnt1+=1;}
-                       }
-                   }
-                    rf_pos+=l; rd_pos+=l;
-                }
-                else if(op == BAM_CDEL || op == BAM_CREF_SKIP) {rf_pos+=l;}
-                else if(op == BAM_CINS) {rd_pos+=l;}
-                else if(op == BAM_CSOFT_CLIP){rd_pos+=l;}
-                 //printf("I am here2\n");
-
-         }
-
-          //printf("I am here3\n");
-         ///////////////////////////////////////
+          
+          
          if(ref_tid==b->core.tid && ref && fai){
          OA->cnt+=1;
          get_seqInfo(b, ref, ref_len, T, OA, read_ovrlp_st, read_ovrlp_nd);
-         //Addup_u(OA, T, 0, rLen, "Overall");
-         //printf("Mapping quality=%d	Zero=%ld	1-10=%ld	Sixty=%ld\n",b->core.qual, OA->glog.MapQ_bin_dist[1], OA->glog.MapQ_bin_dist[2], OA->glog.MapQ_bin_dist[7]);
+         
          if(b->core.flag & BAM_FREAD1) 
          {
-            //Addup_u(RD1, T, 0, rLen, "Read1");
+            
             if(b->core.flag & BAM_FREVERSE) 
             {
                 Addup_u_u(OA, RD1, RD1_RS, T, 1, rLen, 1);
                 RD1_RS->cnt+=1;
-                //Addup_u(RD1_RS, T, 1, rLen, "Read1_rs");
+                
             }
             else
             {
                 Addup_u_u(OA, RD1, RD1_FS, T, 1, rLen, 0);
                 RD1_FS->cnt+=1;
-                //Addup_u(RD1_FS, T, 1, rLen, "Read1_fs");            
+                            
             }
 
          }
          else
          {
-            //Addup_u(RD2, T, 0, rLen, "Read2");
+            
             if(b->core.flag & BAM_FREVERSE) 
             {
                 Addup_u_u(OA, RD2, RD2_RS, T, 1, rLen, 1);
                 RD2_RS->cnt+=1;
-                //Addup_u(RD2_RS, T, 1, rLen, "Read2_rs");
+                
             }
             else
             {
                 Addup_u_u(OA, RD2, RD2_FS, T, 1, rLen, 0);
                 RD2_FS->cnt+=1;
-                //Addup_u(RD2_FS, T, 1, rLen, "Read2_fs");            
+                            
             } 
          }
          
-         /*get_seqInfo(b, ref, ref_len , ri);*/}
-         
-         //printf("Miss-match = %d	%d	%d	%d	%s	",ri->dif_count, ri->sq_len, ri->sc_pct, ri->q_sum,bam_aux_get(b, "MD"));
-         //ch=bam_format1(xheader,b);
-         //puts(ch);
-         
+        }          
       }
       bam_close(fp);
       
-      //DisLog(OA);
+      
       if(bed) {PrintGenrlLogFiles_u(OA, rLenMax, prmtr->trgtsize, prmtr->outdir, "Overall", prmtr);} else {PrintGenrlLogFiles_u(OA, rLenMax, prmtr->ref_size, prmtr->outdir, "Overall", prmtr);}
       PrintGenrlLogFiles_u(RD1, rLenMax, prmtr->trgtsize, prmtr->outdir, "Read1", prmtr);
       PrintGenrlLogFiles_u(RD2, rLenMax, prmtr->trgtsize, prmtr->outdir, "Read2", prmtr);
       PrintLogFiles(OA, 1, rLenMax, prmtr->outdir);
       makeplots_v1(prmtr->outdir, "Overall");
-      //printf("Mean depth of coverage = %f\n",(float)(T->glog.AAcnt+T->glog.TTcnt+T->glog.GGcnt+T->glog.CCcnt)/(float)trgtsize);
+      
       PrintLogFiles(RD1_FS, 2, rLenMax, prmtr->outdir);
       makeplots_v1(prmtr->outdir, "Read1_fs");
       PrintLogFiles(RD1_RS, 3, rLenMax, prmtr->outdir);
@@ -3360,47 +3283,22 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
       makeplots_v1(prmtr->outdir, "Read2_fs");
       PrintLogFiles(RD2_RS, 5, rLenMax, prmtr->outdir);
       makeplots_v1(prmtr->outdir, "Read2_rs");
-      //system("R CMD BATCH Mismatch_plot_v2_All.R");
-      //printf("Total no of reads =%d\n",Counttt);
-      //printf("No of mismatch = %ld\n",mm_cnt1);
-      //printf("A counts = %ld\n", Acnt);
-      //printf("T counts = %ld\n", Tcnt);
-      //printf("G counts = %ld\n", Gcnt);
-      //printf("C counts = %ld\n", Ccnt);
-      //printf("N counts = %ld\n", Ncnt);
-
-      //printf("A1 counts = %ld\n", A1cnt);
-      //printf("T1 counts = %ld\n", T1cnt);
-      //printf("G1 counts = %ld\n", G1cnt);
-      //printf("C1 counts = %ld\n", C1cnt);
-      //printf("N1 counts = %ld\n", N1cnt);
-  
-      
-
-  
+            
       
       
-      
-      //printf("Level1\n");
       draw_plots(prmtr->outdir);
-      //printf("Level2\n");
+      
       Arrange(prmtr->outdir);
-      //printf("Level3\n");
+      
       
       time_t t;
       time(&t);
-      //printf("Level3.1\n");
-      crthtml(prmtr, ctime(&t), OA, RD1, RD2);
-      //printf("Analysis date & time = %s\n", ctime(&t));
       
-      //printf("Total no of mismatchs = %d\n", T->midc.basemmc);
-      //for(x = 0 ; x < 12 ; x++) {printf("%d\n",T->MMC[x]);}
+      crthtml(prmtr, ctime(&t), OA, RD1, RD2);
+      
       
       if (bed) bed_destroy_u(bed);
-      //if(bed) {printf("Bed is allocated\n");}
-      //printf("Level4\n");
-      //printf("SeqCounts = %llu\n", seqcount);
-      //printf("line Count = %ld\n", OA->glog.all_rd_cnt);
+      
       printf("100%% complete\n\n");
       printf("QC analysis done\n\n");
       return 0;
