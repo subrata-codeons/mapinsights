@@ -90,7 +90,7 @@ Options:
 	
 
 ```
-
-
+[Mapinsights-bamqc module report(example)](https://subrata-codeons.github.io/Demo/Bamqc.html#GC%20content%20distribution)
+[Mapinsights-genedepth module report (example)](https://subrata-codeons.github.io/Demo/Bamqc.html#GC%20content%20distribution)
 
 
