@@ -5,6 +5,7 @@ MapInsights is an efficient toolkit that perform quality control (QC) analysis o
 
 <b><i>multisample-bamqc</i></b> perform combined analysis on multisample <b><i>bamqc</i></b> results. The module facilitates comparison analysis across multiple samples that allow evaluation of consistency among samples and outlier detection based on different features.Given a set of multisample <b><i>bamqc</i></b> results the module perform hierarchical cluster analysis to estimate the variability. PDF file containging plots (features and tree) and other log files are the output of <i>multisample-bamqc</i>.
 
+
 <b><i>batchplot-bamqc</i></b> generate batch-plots based on different features. Given multisample <b><i>bamqc</i></b> results in batch-wise manner it output batch-plot of two given group and put them in side-by-side fashion for better comparison. 
 
 <b><i>genedepth</i></b> module calculate exon or region wise depth of coverage. The module takes genomic coordinates in bed format, a sorted BAM file and reference file as input and generate logs and depth plots which are presented as a report in HTML.
