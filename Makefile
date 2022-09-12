@@ -7,7 +7,7 @@ LOBJS=		bgzf.o kstring.o bam_aux.o bam.o bam_import.o sam.o bam_index.o	\
 			bam_pileup.o razf.o faidx.o \
 			sam_header.o
 AOBJS=		bamqc.o allmod.o genedepth.o siteinfo.o \
-			jumpreads.o
+		jumpreads.o multisamplebamqc.o batchplotbamqc.o
 PROG=		mapinsights
 INCLUDES=	-I.
 SUBDIRS=	.
@@ -61,7 +61,8 @@ bamqc.o:bam.h faidx.h kstring.h ksort.h kseq.h khash.h
 genedepth.o:bam.h faidx.h
 jumpreads.o:bam.h
 siteinfo.o:bam.h faidx.h
-
+multisamplebamqc.o:bam.h
+batchplotbamqc:bam.h
 
 libbam.1.dylib-local:$(LOBJS)
 		libtool -dynamic $(LOBJS) -o libbam.1.dylib -lc -lz
