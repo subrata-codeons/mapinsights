@@ -1,7 +1,11 @@
 # MapInsights
-MapInsights is an efficient toolkit that perform quality control (QC) analysis of next generation sequencing data. Four different modules namely <b><i>`bamqc`</i></b>, <b><i>`genedepth`</i></b>, <b><i>`siteinfo`</i></b> & <b><i>`jumpreads`</i></b> are designed and developed as a part of this toolkit.
+MapInsights is an efficient toolkit that perform quality control (QC) analysis of next generation sequencing data. Four different modules namely <b><i>`bamqc`</i></b>, <b><i>`genedepth`</i></b>, <b><i>`siteinfo`</i></b> & <b><i>`jumpreads`</i></b> are designed and developed as a part of this toolkit. Tow other sub-modules <b><i>`multisample-bamqc`</i></b>, <b><i>`batchplot-bamqc`</i></b> also included in out toolkit that work in relation with <b><i>`bamqc`</i></b> module.
 
-<b><i>bamqc</i></b> in an efficient analytical module that performs QC analysis of alignment files. Along with standard QC metrics, it computes extended sets of logs and plots on base mismatches with respect to reference nucleotide in an overall and context specific manner like combination of reads and strands. A coordinate sorted BAM file and reference file are the primary input to the module. Logs, images and a static report in HTML contains summary statistics and plots are the output of <i>bamqc</i>.
+<b><i>bamqc</i></b> is an efficient analytical module that performs QC analysis of alignment files. Along with standard QC metrics, it computes extended sets of logs and plots on base mismatches with respect to reference nucleotide in an overall and context specific manner like combination of reads and strands. A coordinate sorted BAM file and reference file are the primary input to the module. Logs, images and a static report in HTML contains summary statistics and plots are the output of <i>bamqc</i>.
+
+<b><i>multisample-bamqc</i></b> perform combined analysis on multisample <b><i>bamqc</i></b> results. The module facilitates comparison analysis across multiple samples that allow evaluation of consistency among samples and outlier detection based on different features.Given a set of multisample <b><i>bamqc</i></b> results the module perform hierarchical cluster analysis to estimate the variability. PDF file containging plots (features and tree) and other log files are the output of <i>multisample-bamqc</i>.
+
+<b><i>batchplot-bamqc</i></b> generate batch-plots based on different features. Given multisample <b><i>bamqc</i></b> results in batch-wise manner it output batch-plot of two given group and put them in side-by-side fashion for better comparison. 
 
 <b><i>genedepth</i></b> module calculate exon or region wise depth of coverage. The module takes genomic coordinates in bed format, a sorted BAM file and reference file as input and generate logs and depth plots which are presented as a report in HTML.
 
@@ -12,7 +16,7 @@ MapInsights is an efficient toolkit that perform quality control (QC) analysis o
 # Installation
 ### **Requirements:**
 
-<b>- R</b>  <i>` -ggplot2,  -gridExtra `</i>
+<b>- R</b>  <i>` -ggplot2, -ggdendro, -gridExtra `</i>
 
 ### **Getting started:**
 ```
@@ -35,6 +39,8 @@ Version: 1.0
 Usage:   mapinsights <command> [options]
 
 Command: bamqc        QC of alignment file
+	 multisample-bamqc	Multi-sample QC analysis based on bamqc results
+         batchplot-bamqc	Plotting multi-sample bamqc results
          genedepth    Estimate exon-wise bed coverage
          siteinfo     Details information about genomic site(s)
          jumpreads    Extract reads with jump alignment
@@ -52,6 +58,48 @@ Options:
 	-x   exclude read groups
              listed in FILE, one per line  [null]
 	-h   help
+```
+### **mapinsights-multisample-bamqc**
+```
+Usage:  mapinsights multisample-bamqc -i <folder_path.list>
+
+Options:
+	-r   folder_path.list
+	-h   help
+
+About input file structure:
+folder_path.list file containing a list of bamqc output folder path, one per line.
+
+There are two tab separated columns in the input file (folder_path.list), 
+first column should be sample_id and the second column should be the path to 
+bamqc output folder. Example structure of the file is given below:
+
+ [sample1	path_to_bamqc_output_folder_of_sample1]
+ [sample2	path_to_bamqc_output_folder_of_sample2]
+ [  .	       .                                      ]
+ [  .	       .                                      ]
+ [sampleN	path_to_bamqc_output_folder_of_sampleN]
+```
+### **mapinsights-batchplot-bamqc**
+```
+Usage:  mapinsights multisample-bamqc -1 <bamqc_folder_path_for_batch1.list> -2 <bamqc_folder_path_for_batch2.list>
+
+Options:
+	-1   bamqc_folder_path_for_batch1.list
+	-2   bamqc_folder_path_for_batch2.list
+	-h   help
+About input file structure:
+folder_path_for_batch1/2.list file containing a list of bamqc output folder path, one per line.
+
+There are two tab separated columns in the input file (folder_path.list), 
+first column should be sample_id and the second column should be the path to 
+bamqc output folder. Example structure of the file is given below:
+
+ [sample1	path_to_bamqc_output_folder_of_sample1]
+ [sample2	path_to_bamqc_output_folder_of_sample2]
+ [  .	       .                                      ]
+ [  .	       .                                      ]
+ [sampleN	path_to_bamqc_output_folder_of_sampleN]
 ```
 ### **mapinsights-genedepth**
 ```
