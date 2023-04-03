@@ -1,4 +1,6 @@
-# MapInsights
+![Screenshot from 2023-04-03 16-09-12](https://user-images.githubusercontent.com/58687150/229493691-48f88012-5ee6-4b68-8e26-1285da5c3d4e.png)
+
+
 
 
 MapInsights is an efficient toolkit that perform quality control (QC) analysis of next generation sequencing data. Four different modules namely <b><i>`bamqc`</i></b>, <b><i>`genedepth`</i></b>, <b><i>`siteinfo`</i></b> & <b><i>`jumpreads`</i></b> are designed and developed as a part of this toolkit. Tow other modules <b><i>`multisample-bamqc`</i></b>, <b><i>`batchplot-bamqc`</i></b> also included in our toolkit that work in relation with <b><i>`bamqc`</i></b> module.
