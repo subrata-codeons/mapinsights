@@ -1,4 +1,4 @@
-![Screenshot from 2023-04-03 16-09-12](https://user-images.githubusercontent.com/58687150/229493691-48f88012-5ee6-4b68-8e26-1285da5c3d4e.png)
+# MapInsights
 
 
 
