@@ -1717,7 +1717,7 @@ void PrintLogFiles(log_v *OA, int type, int rLen, char *outdir)
         sprintf(outfn, "%s/%s_mapping_summary.log", outdir, prefix);
         gfp1=fopen(outfn,"w");
         //rd_cnt=T->glog.tot_rd_cnt-(T->glog.scndry_cnt + T->glog.scndry_cnt);
-        fprintf(gfp1,"\nmapinsights bamqc report (version-1.0)\n");
+        fprintf(gfp1,"\nmapinsights bamqc report (version-1.0.0)\n");
         fprintf(gfp1,"======================================\n\n");
         fprintf(gfp1,"command = mapinsights %s\n\n", prmtr->comnd);
         fprintf(gfp1,"Mapping Statistics\n");
@@ -2927,7 +2927,7 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
 	fprintf(fp,"\n");
 	fprintf(fp,"\n");
 	fprintf(fp,"    <div class=\"fixed-footer\">\n");
-	fprintf(fp,"        <div style=\"color:white; font-size:100%%; float: right; padding-right: 20px; class=\"container\">Created by Mapinsights (version 1.0) </div>\n");
+	fprintf(fp,"        <div style=\"color:white; font-size:100%%; float: right; padding-right: 20px; class=\"container\">Created by Mapinsights (version 1.0.0) </div>\n");
 	fprintf(fp,"    </div>\n");
 	fprintf(fp,"</body>\n");
 	fprintf(fp,"</html>\n");
@@ -2957,7 +2957,7 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
  {
    fprintf(stderr, "\n");
    fprintf(stderr, "Program: mapinsights\n");
-   fprintf(stderr, "Version: 1.0\n\n");
+   //fprintf(stderr, "Version: 1.0.0\n\n");
    fprintf(stderr, "Usage: mapinsights bamqc -r <ref.fa> -o <output-folder-path> -i <aligned.bam>\n\n");
    fprintf(stderr, "Options:\n");
    fprintf(stderr, "	-r  ref.fa	reference fasta\n");        
@@ -3054,7 +3054,7 @@ void crthtml(paramtr *prmtr, char *tme, log_v *OA, log_v *R1, log_v *R2)
    for(i=0;i<argc; i++) { strcat(prmtr->comnd, argv[i]); strcat(prmtr->comnd, " ");}
 
    printf("Program: mapinsights\n");
-   printf("Version: 1.0\n\n");
+   printf("Version: 1.0.0\n\n");
    printf("command :: mapinsights %s\n\n", prmtr->comnd);
 
    

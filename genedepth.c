@@ -354,7 +354,7 @@ fprintf(fp,"</table>\n");
    
    fprintf(fp,"\n");
 	fprintf(fp,"    <div class=\"fixed-footer\">\n");
-	fprintf(fp,"        <div style=\"color:white; font-size:100%%; float: right; padding-right: 20px; class=\"container\">Created by Mapinsights (version 1.0) </div>\n");
+	fprintf(fp,"        <div style=\"color:white; font-size:100%%; float: right; padding-right: 20px; class=\"container\">Created by Mapinsights (version 1.0.0) </div>\n");
 	fprintf(fp,"    </div>\n");
 	fprintf(fp,"</body>\n");
 	fprintf(fp,"</html>\n");

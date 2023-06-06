@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-char *MAPINSIGHTS_VERSION = "1.0";
+char *MAPINSIGHTS_VERSION = "1.0.0";
 
 int main_bamqc(int argc,char *argv[]);
 int main_genedepth(int argc, char *argv[]);

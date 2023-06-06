@@ -102,6 +102,7 @@ int main_siteinfo(int argc, char *argv[])
 	
 	if(pmtr->out_file) {
 	fprintf(ofp,"# mapinsights siteinfo output\n");
+	fprintf(ofp,"# mapinsights version-1.0.0\n");
 	fprintf(ofp,"#Command = mapinsights");
 	for(i=0;i<argc; i++) {fprintf(ofp," %s", argv[i]);}
 	fprintf(ofp,"\n\n#Alignment file = %s\n", pmtr->bam_file);
@@ -127,6 +128,7 @@ int main_siteinfo(int argc, char *argv[])
 	else
 	{
 	printf("# mapinsights siteinfo output\n");
+	printf("# mapinsights version-1.0.0\n");
 	printf("#Command = mapinsights");
 	for(i=0;i<argc; i++) {printf(" %s", argv[i]);}
 	printf("\n\n#Alignment file = %s\n", pmtr->bam_file);
