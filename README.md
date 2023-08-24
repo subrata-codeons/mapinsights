@@ -17,6 +17,11 @@ MapInsights is an efficient toolkit that perform quality control (QC) analysis o
 
 <b><i>jumpreads</i></b> module extract reads with atypical alignment properties such as extra long inserts, mate map to different contigs and exception in read orientation etc. jumpreads acts on a coordinate sorted BAM file which is the primary input of the module and generate a bam file as output.
 
+# Citing
+Please cite this paper when you use <i>Mapinsights</i>.
+Mapinsights: deep exploration of quality issues and error profiles in high-throughput sequence data, Subrata Das, Nidhan K Biswas, Analabha basu, Nucleic Acids Research, Volume 51, Issue 14, 11 August 2023, Page e75, https://doi.org/10.1093/nar/gkad539
+
+
 # Installation
 ### **Requirements:**
 
