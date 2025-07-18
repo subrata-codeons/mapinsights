@@ -73,7 +73,7 @@ Options:
 Usage:  mapinsights multisample-bamqc -i <folder_path.list>
 
 Options:
-	-r   folder_path.list
+	-i   folder_path.list
 	-h   help
 
 About input file structure:
